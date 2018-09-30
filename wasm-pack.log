@@ -1,0 +1,25 @@
+Sep 30 16:21:53.080 ERRO Compilation of your program failed. stderr:
+
+   Compiling wasm-game-of-life v0.1.0 (/Users/bogdan/Documents/work/rustwasm/wasm-game-of-life)
+error[E0423]: expected value, found macro `column`
+  --> src/lib.rs:77:67
+   |
+77 |                     log!("cell from [{}, {}] changed state", row, column);
+   |                                                                   ^^^^^^ did you mean `column!(...)`?
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0423`.
+error: Could not compile `wasm-game-of-life`.
+
+To learn more, run the command again with --verbose.
+
+Sep 30 16:25:35.475 ERRO Compilation of your program failed. stderr:
+
+error: failed to parse manifest at `/Users/bogdan/Documents/work/rustwasm/wasm-game-of-life/Cargo.toml`
+
+Caused by:
+  Feature `default-features` includes `console_error_panic_hook` which is neither a dependency nor another feature
+
+Sep 30 16:30:47.566 ERRO missing field `package`
+Sep 30 16:30:55.753 ERRO missing field `package`

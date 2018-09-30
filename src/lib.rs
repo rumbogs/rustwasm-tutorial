@@ -1,4 +1,5 @@
 extern crate cfg_if;
+extern crate js_sys;
 extern crate wasm_bindgen;
 
 mod utils;
@@ -9,6 +10,16 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 extern "C" {
     fn alert(s: &str);
+}
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = console)]
+    fn log(msg: &str);
+}
+
+macro_rules! log {
+    ($($t:tt)*) => (log(&format!($($t)*)));
 }
 
 #[wasm_bindgen]
@@ -53,6 +64,10 @@ impl Universe {
                     (otherwise, _) => otherwise,
                 };
 
+                // if cell != next_cell {
+                //     log!("cell from [{}, {}] changed state", row, col);
+                // }
+
                 next[idx] = next_cell;
             }
         }
@@ -82,12 +97,13 @@ impl Universe {
     }
 
     pub fn new() -> Universe {
+        utils::set_panic_hook();
         let width = 64;
         let height = 64;
 
         let cells = (0..width * height)
-            .map(|i| {
-                if i % 2 == 0 || i % 7 == 0 {
+            .map(|_i| {
+                if js_sys::Math::random() < 0.5 {
                     Cell::Alive
                 } else {
                     Cell::Dead
